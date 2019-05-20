@@ -21,7 +21,7 @@ class BaseTabBarController: UITabBarController {
         
             createNavController(viewController: UIViewController(), title: "Today", imageName: "today_icon"),
             createNavController(viewController: UIViewController(), title: "Apps", imageName: "apps"),
-            createNavController(viewController: UIViewController(), title: "Search", imageName: "search"),
+            createNavController(viewController: AppSearchController(), title: "Search", imageName: "search"),
         ]
     }
     

@@ -8,20 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		B852329B2293079B007EF38B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B852329A2293079B007EF38B /* AppDelegate.swift */; };
-		B852329D2293079B007EF38B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B852329C2293079B007EF38B /* ViewController.swift */; };
 		B85232A22293079C007EF38B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B85232A12293079C007EF38B /* Assets.xcassets */; };
 		B85232A52293079C007EF38B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B85232A32293079C007EF38B /* LaunchScreen.storyboard */; };
 		B85232AD229309D2007EF38B /* BaseTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232AC229309D2007EF38B /* BaseTabController.swift */; };
+		B85232B2229319A7007EF38B /* AppSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B1229319A7007EF38B /* AppSearchController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B85232972293079B007EF38B /* AppStoreClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppStoreClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B852329A2293079B007EF38B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B852329C2293079B007EF38B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B85232A12293079C007EF38B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B85232A42293079C007EF38B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B85232A62293079C007EF38B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B85232AC229309D2007EF38B /* BaseTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTabController.swift; sourceTree = "<group>"; };
+		B85232B1229319A7007EF38B /* AppSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,13 +54,13 @@
 		B85232992293079B007EF38B /* AppStoreClone */ = {
 			isa = PBXGroup;
 			children = (
+				B85232B022931969007EF38B /* Models */,
+				B85232AF2293195E007EF38B /* Views */,
 				B85232AE2293192C007EF38B /* Controllers */,
 				B852329A2293079B007EF38B /* AppDelegate.swift */,
-				B852329C2293079B007EF38B /* ViewController.swift */,
 				B85232A12293079C007EF38B /* Assets.xcassets */,
 				B85232A32293079C007EF38B /* LaunchScreen.storyboard */,
 				B85232A62293079C007EF38B /* Info.plist */,
-				B85232AC229309D2007EF38B /* BaseTabController.swift */,
 			);
 			path = AppStoreClone;
 			sourceTree = "<group>";
@@ -68,8 +68,24 @@
 		B85232AE2293192C007EF38B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B85232AC229309D2007EF38B /* BaseTabController.swift */,
+				B85232B1229319A7007EF38B /* AppSearchController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B85232AF2293195E007EF38B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B85232B022931969007EF38B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,8 +158,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B852329D2293079B007EF38B /* ViewController.swift in Sources */,
 				B852329B2293079B007EF38B /* AppDelegate.swift in Sources */,
+				B85232B2229319A7007EF38B /* AppSearchController.swift in Sources */,
 				B85232AD229309D2007EF38B /* BaseTabController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
