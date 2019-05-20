@@ -22,6 +22,7 @@ class SearchResultCell: UICollectionViewCell {
         return iv
     }()
     
+    
     let appTitleLabel: UILabel = {
        
         let label = UILabel()
@@ -60,6 +61,10 @@ class SearchResultCell: UICollectionViewCell {
         return button
     }()
     
+    lazy var screenshot1ImageView = self.createScreenShotImageView()
+    lazy var screenshot2ImageView = self.createScreenShotImageView()
+    lazy var screenshot3ImageView = self.createScreenShotImageView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -80,5 +85,10 @@ class SearchResultCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    func createScreenShotImageView() -> UIImageView{
+        
+        let imageView = UIImageView()
+        imageView.backgroundColor = .blue
+        return imageView
+    }
 }
