@@ -12,8 +12,6 @@ import UIKit
 class BaseTabBarController: UITabBarController {
     
     
-    // 1 - Refactor the repeated logic inside the viewDidLoad()
-    // 2 - Introduce AppStoreSearchController
     override func viewDidLoad() {
         super.viewDidLoad()
         
