@@ -73,12 +73,20 @@ class SearchResultCell: UICollectionViewCell {
         let labelsStackView = UIStackView(arrangedSubviews: [appTitleLabel, categoryLabel, ratingsLabel])
         labelsStackView.axis = .vertical
         
-        let stackView = UIStackView(arrangedSubviews: [appThumbnailView, labelsStackView, getButton])
-        stackView.spacing = 12
-        stackView.alignment = .center
+        let screenshostStackView = UIStackView(arrangedSubviews: [screenshot1ImageView, screenshot2ImageView, screenshot3ImageView])
+        screenshostStackView.spacing = 12
+        screenshostStackView.distribution = .fillEqually
         
-        addSubview(stackView)
-        stackView.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+        let infoTopStackView = UIStackView(arrangedSubviews: [appThumbnailView, labelsStackView, getButton])
+        infoTopStackView.spacing = 12
+        infoTopStackView.alignment = .center
+        
+        let overallStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenshostStackView])
+        overallStackView.axis = .vertical
+        overallStackView.spacing = 16
+        
+        addSubview(overallStackView)
+        overallStackView.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
     }
     
     required init?(coder aDecoder: NSCoder) {
