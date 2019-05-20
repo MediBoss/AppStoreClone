@@ -67,36 +67,47 @@ class SearchResultCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = .green
-        
-        let labelsStackView = UIStackView(arrangedSubviews: [appTitleLabel, categoryLabel, ratingsLabel])
-        labelsStackView.axis = .vertical
-        
-        let screenshostStackView = UIStackView(arrangedSubviews: [screenshot1ImageView, screenshot2ImageView, screenshot3ImageView])
-        screenshostStackView.spacing = 12
-        screenshostStackView.distribution = .fillEqually
-        
-        let infoTopStackView = UIStackView(arrangedSubviews: [appThumbnailView, labelsStackView, getButton])
-        infoTopStackView.spacing = 12
-        infoTopStackView.alignment = .center
-        
-        let overallStackView = UIStackView(arrangedSubviews: [infoTopStackView, screenshostStackView])
-        overallStackView.axis = .vertical
-        overallStackView.spacing = 16
-        
-        addSubview(overallStackView)
-        overallStackView.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
+
+        configureAllStackViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createScreenShotImageView() -> UIImageView{
+    fileprivate func createScreenShotImageView() -> UIImageView{
         
         let imageView = UIImageView()
         imageView.backgroundColor = .blue
         return imageView
+    }
+    
+    fileprivate func configureAllStackViews() {
+        
+        let labelsStackView = CustomStackView(arrangedSubviews: [appTitleLabel, categoryLabel, ratingsLabel],
+                                              axis: .vertical,
+                                              distribution: .fill)
+        
+        
+        let screenshostStackView = CustomStackView(arrangedSubviews: [screenshot1ImageView, screenshot2ImageView, screenshot3ImageView],
+                                                   spacing: 12,
+                                                   axis: .horizontal,
+                                                   distribution: .fillEqually)
+        
+        
+        let infoTopStackView = CustomStackView(arrangedSubviews: [appThumbnailView, labelsStackView, getButton],
+                                               spacing: 12,
+                                               axis: .horizontal,
+                                               distribution: .fill)
+        
+        infoTopStackView.alignment = .center
+        
+        let overallStackView = CustomStackView(arrangedSubviews: [infoTopStackView, screenshostStackView],
+                                               spacing: 16,
+                                               axis: .vertical,
+                                               distribution: .fill)
+        
+        addSubview(overallStackView)
+        overallStackView.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
     }
 }

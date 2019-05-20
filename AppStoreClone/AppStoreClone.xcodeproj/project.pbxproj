@@ -14,6 +14,7 @@
 		B85232B2229319A7007EF38B /* AppSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B1229319A7007EF38B /* AppSearchController.swift */; };
 		B85232B42293250D007EF38B /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B32293250D007EF38B /* SearchResultCell.swift */; };
 		B85232B722933288007EF38B /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B622933288007EF38B /* UIView+Layout.swift */; };
+		B85232B9229339BF007EF38B /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B8229339BF007EF38B /* VerticalStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		B85232B1229319A7007EF38B /* AppSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchController.swift; sourceTree = "<group>"; };
 		B85232B32293250D007EF38B /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		B85232B622933288007EF38B /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		B85232B8229339BF007EF38B /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				B85232B32293250D007EF38B /* SearchResultCell.swift */,
+				B85232B8229339BF007EF38B /* VerticalStackView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B852329B2293079B007EF38B /* AppDelegate.swift in Sources */,
+				B85232B9229339BF007EF38B /* VerticalStackView.swift in Sources */,
 				B85232B2229319A7007EF38B /* AppSearchController.swift in Sources */,
 				B85232B42293250D007EF38B /* SearchResultCell.swift in Sources */,
 				B85232AD229309D2007EF38B /* BaseTabController.swift in Sources */,
