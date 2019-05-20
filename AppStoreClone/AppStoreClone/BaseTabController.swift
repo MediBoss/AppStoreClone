@@ -11,42 +11,31 @@ import UIKit
 
 class BaseTabBarController: UITabBarController {
     
+    
+    // 1 - Refactor the repeated logic inside the viewDidLoad()
+    // 2 - Introduce AppStoreSearchController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let redViewController = UIViewController()
-        redViewController.view.backgroundColor = .red
-        redViewController.navigationItem.title = "Apps"
-        
-        let redNavController = UINavigationController(rootViewController: redViewController)
-        redNavController.tabBarItem.title = "Apps"
-        redNavController.tabBarItem.image = #imageLiteral(resourceName: "apps")
-        redNavController.navigationBar.prefersLargeTitles = true
-        
-        let blueViewController = UIViewController()
-        blueViewController.view.backgroundColor = .blue
-        blueViewController.navigationItem.title = "Today"
-        
-        
-        let blueNavController = UINavigationController(rootViewController: blueViewController)
-        blueNavController.tabBarItem.title = "Today"
-        blueNavController.tabBarItem.image = #imageLiteral(resourceName: "today_icon")
-        blueNavController.navigationBar.prefersLargeTitles = true
-        
-        let yellowViewController = UIViewController()
-        yellowViewController.view.backgroundColor = .yellow
-        yellowViewController.navigationItem.title = "Search"
-        
-        let yellowNavController = UINavigationController(rootViewController: yellowViewController)
-        yellowNavController.tabBarItem.title = "Search"
-        yellowNavController.tabBarItem.image = #imageLiteral(resourceName: "search")
-        yellowNavController.navigationBar.prefersLargeTitles = true
-        
         viewControllers = [
         
-            redNavController,
-            blueNavController,
-            yellowNavController
+            createNavController(viewController: UIViewController(), title: "Today", imageName: "today_icon"),
+            createNavController(viewController: UIViewController(), title: "Apps", imageName: "apps"),
+            createNavController(viewController: UIViewController(), title: "Search", imageName: "search"),
         ]
+    }
+    
+    
+    /// Configures the navigation controller for a given view controller
+    fileprivate func createNavController(viewController: UIViewController, title: String, imageName: String) -> UIViewController {
+    
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewController.view.backgroundColor = .white
+        viewController.navigationItem.title = title
+        navigationController.tabBarItem.title = title
+        navigationController.tabBarItem.image = UIImage(named: imageName)
+        navigationController.navigationBar.prefersLargeTitles = true
+        
+        return navigationController
     }
 }

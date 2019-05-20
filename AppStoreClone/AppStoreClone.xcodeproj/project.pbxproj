@@ -54,6 +54,7 @@
 		B85232992293079B007EF38B /* AppStoreClone */ = {
 			isa = PBXGroup;
 			children = (
+				B85232AE2293192C007EF38B /* Controllers */,
 				B852329A2293079B007EF38B /* AppDelegate.swift */,
 				B852329C2293079B007EF38B /* ViewController.swift */,
 				B85232A12293079C007EF38B /* Assets.xcassets */,
@@ -62,6 +63,13 @@
 				B85232AC229309D2007EF38B /* BaseTabController.swift */,
 			);
 			path = AppStoreClone;
+			sourceTree = "<group>";
+		};
+		B85232AE2293192C007EF38B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
