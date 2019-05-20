@@ -55,6 +55,7 @@ class SearchResultCell: UICollectionViewCell {
         button.titleLabel?.font = .boldSystemFont(ofSize: 14)
         button.layer.cornerRadius = 15
         button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
         return button
     }()
@@ -72,12 +73,7 @@ class SearchResultCell: UICollectionViewCell {
         stackView.alignment = .center
         
         addSubview(stackView)
-        
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView.safeAreaLayoutGuide.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 5).isActive = true
-        stackView.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -5).isActive = true
-        stackView.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        stackView.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
     }
     
     required init?(coder aDecoder: NSCoder) {
