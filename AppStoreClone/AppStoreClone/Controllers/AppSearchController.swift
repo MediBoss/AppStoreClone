@@ -26,8 +26,34 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
         collectionView.backgroundColor = .white
         
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: SearchResultCell.cellID)
+        fetchItunesApps()
     }
     
+    func fetchItunesApps() {
+        
+        let urlString = "https://itunes.apple.com/search?term=instangram&entity=software"
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, res, err) in
+            
+            if err != nil {
+                print("Error happened")
+                return
+            }
+            
+            guard let data = data else { return }
+            
+            do {
+                let result = try JSONDecoder().decode(SearchResult.self, from: data)
+                print(result)
+            } catch let decodeError{
+                print("Failed to decode JSON", decodeError)
+            }
+            
+            
+        }.resume()
+    }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -36,7 +62,7 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCell.cellID, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCell.cellID, for: indexPath) as! SearchResultCell
         
         return cell
     }
