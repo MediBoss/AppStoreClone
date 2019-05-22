@@ -16,6 +16,7 @@
 		B85232B722933288007EF38B /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B622933288007EF38B /* UIView+Layout.swift */; };
 		B85232B9229339BF007EF38B /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85232B8229339BF007EF38B /* VerticalStackView.swift */; };
 		B893CF432295E535008ECC0D /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B893CF422295E535008ECC0D /* SearchResult.swift */; };
+		B893CF462295E8DA008ECC0D /* AppSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B893CF452295E8DA008ECC0D /* AppSearchService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		B85232B622933288007EF38B /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
 		B85232B8229339BF007EF38B /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		B893CF422295E535008ECC0D /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		B893CF452295E8DA008ECC0D /* AppSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +64,11 @@
 		B85232992293079B007EF38B /* AppStoreClone */ = {
 			isa = PBXGroup;
 			children = (
-				B893CF442295E5D5008ECC0D /* Networking */,
-				B85232B522933266007EF38B /* Helpers */,
-				B85232B022931969007EF38B /* Models */,
-				B85232AF2293195E007EF38B /* Views */,
-				B85232AE2293192C007EF38B /* Controllers */,
+				B893CF442295E5D5008ECC0D /* Service */,
+				B85232B522933266007EF38B /* Helper */,
+				B85232B022931969007EF38B /* Model */,
+				B85232AF2293195E007EF38B /* View */,
+				B85232AE2293192C007EF38B /* Controller */,
 				B852329A2293079B007EF38B /* AppDelegate.swift */,
 				B85232A12293079C007EF38B /* Assets.xcassets */,
 				B85232A32293079C007EF38B /* LaunchScreen.storyboard */,
@@ -75,45 +77,46 @@
 			path = AppStoreClone;
 			sourceTree = "<group>";
 		};
-		B85232AE2293192C007EF38B /* Controllers */ = {
+		B85232AE2293192C007EF38B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				B85232AC229309D2007EF38B /* BaseTabController.swift */,
 				B85232B1229319A7007EF38B /* AppSearchController.swift */,
 			);
-			path = Controllers;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		B85232AF2293195E007EF38B /* Views */ = {
+		B85232AF2293195E007EF38B /* View */ = {
 			isa = PBXGroup;
 			children = (
 				B85232B32293250D007EF38B /* SearchResultCell.swift */,
 				B85232B8229339BF007EF38B /* VerticalStackView.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
-		B85232B022931969007EF38B /* Models */ = {
+		B85232B022931969007EF38B /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				B893CF422295E535008ECC0D /* SearchResult.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
-		B85232B522933266007EF38B /* Helpers */ = {
+		B85232B522933266007EF38B /* Helper */ = {
 			isa = PBXGroup;
 			children = (
 				B85232B622933288007EF38B /* UIView+Layout.swift */,
 			);
-			path = Helpers;
+			path = Helper;
 			sourceTree = "<group>";
 		};
-		B893CF442295E5D5008ECC0D /* Networking */ = {
+		B893CF442295E5D5008ECC0D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				B893CF452295E8DA008ECC0D /* AppSearchService.swift */,
 			);
-			path = Networking;
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B852329B2293079B007EF38B /* AppDelegate.swift in Sources */,
+				B893CF462295E8DA008ECC0D /* AppSearchService.swift in Sources */,
 				B893CF432295E535008ECC0D /* SearchResult.swift in Sources */,
 				B85232B9229339BF007EF38B /* VerticalStackView.swift in Sources */,
 				B85232B2229319A7007EF38B /* AppSearchController.swift in Sources */,

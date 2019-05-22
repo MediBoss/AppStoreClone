@@ -33,34 +33,19 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     
     func fetchItunesApps() {
         
-        let urlString = "https://itunes.apple.com/search?term=instangram&entity=software"
-        
-        guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, res, err) in
-            
-            if err != nil {
-                print("Error happened")
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
+        AppSearchService.shared.fetchApps { (searchResult) in
+            switch searchResult {
+            case let .success(apps):
                 
-                let result = try JSONDecoder().decode(SearchResult.self, from: data)
-                self.appSearchResults = result.results
-                
+                self.appSearchResults = apps
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
                 
-            } catch let decodeError{
-                print("Failed to decode JSON", decodeError)
+            case let .failure(error):
+                print("error found")
             }
-            
-            
-        }.resume()
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -71,10 +56,11 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCell.cellID, for: indexPath) as! SearchResultCell
-        let currentResult = appSearchResults[indexPath.row]
+        let currentResult = appSearchResults[indexPath.item]
         
         cell.appTitleLabel.text = currentResult.trackName
         cell.categoryLabel.text = currentResult.primaryGenreName
+        cell.ratingsLabel.text = "Rating: \(currentResult.averageUserRating ?? 0.0)"
         
         return cell
     }
