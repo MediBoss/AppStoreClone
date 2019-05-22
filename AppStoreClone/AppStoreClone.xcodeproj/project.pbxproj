@@ -62,6 +62,7 @@
 		B85232992293079B007EF38B /* AppStoreClone */ = {
 			isa = PBXGroup;
 			children = (
+				B893CF442295E5D5008ECC0D /* Networking */,
 				B85232B522933266007EF38B /* Helpers */,
 				B85232B022931969007EF38B /* Models */,
 				B85232AF2293195E007EF38B /* Views */,
@@ -106,6 +107,13 @@
 				B85232B622933288007EF38B /* UIView+Layout.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B893CF442295E5D5008ECC0D /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

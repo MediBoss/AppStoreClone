@@ -10,6 +10,9 @@ import UIKit
 
 class AppSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    
+    fileprivate var appSearchResults = [ResultType]()
+    
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
@@ -17,7 +20,6 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +47,14 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
             guard let data = data else { return }
             
             do {
+                
                 let result = try JSONDecoder().decode(SearchResult.self, from: data)
-                print(result)
+                self.appSearchResults = result.results
+                
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
             } catch let decodeError{
                 print("Failed to decode JSON", decodeError)
             }
@@ -57,12 +65,16 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 5
+        return self.appSearchResults.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCell.cellID, for: indexPath) as! SearchResultCell
+        let currentResult = appSearchResults[indexPath.row]
+        
+        cell.appTitleLabel.text = currentResult.trackName
+        cell.categoryLabel.text = currentResult.primaryGenreName
         
         return cell
     }
