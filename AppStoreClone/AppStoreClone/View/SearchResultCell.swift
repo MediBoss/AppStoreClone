@@ -19,6 +19,8 @@ class SearchResultCell: UICollectionViewCell {
         iv.widthAnchor.constraint(equalToConstant: 64).isActive = true
         iv.heightAnchor.constraint(equalToConstant: 64).isActive = true
         iv.layer.cornerRadius = 12
+        iv.clipsToBounds = true
+        
         return iv
     }()
     
@@ -79,6 +81,11 @@ class SearchResultCell: UICollectionViewCell {
         
         let imageView = UIImageView()
         imageView.backgroundColor = .blue
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+        imageView.layer.borderWidth = 0.5
+        imageView.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
+        
         return imageView
     }
     
