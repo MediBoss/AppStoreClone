@@ -8,9 +8,9 @@
 
 import UIKit
 
-class AppSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class AppSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
-    
+    fileprivate var throttleTimer: Timer?
     fileprivate var appSearchResults = [ResultType]()
     fileprivate var searchController = UISearchController(searchResultsController: nil)
     
@@ -30,31 +30,20 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
         
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: SearchResultCell.cellID)
         setUpSearchBar()
-        fetchItunesApps()
+        //fetchItunesApps()
     }
     
-    
+    /// Configures and Styles the search bar
     fileprivate func setUpSearchBar() {
+        
+        definesPresentationContext = true
         navigationItem.searchController = self.searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+        self.searchController.dimsBackgroundDuringPresentation = false
+        self.searchController.searchBar.delegate = self
     }
     
-    func fetchItunesApps() {
-        
-        AppSearchService.shared.fetchApps { (searchResult) in
-            switch searchResult {
-            case let .success(apps):
-                
-                self.appSearchResults = apps
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-                
-            case let .failure(error):
-                print("error found")
-            }
-        }
-    }
+    // - MARK : UICollectionView Data Source & Delegate Methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
@@ -72,5 +61,32 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width, height: 350)
+    }
+    
+    
+    // - MARK : UISearchBar Delegate Methods
+    
+    // Makes a call to the AppSearchServices that fetches data given a search query from the search bar.
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        throttleTimer?.invalidate()
+        
+        // Search up a term every half a second, throttles the process if user input is faster than interval
+        throttleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            
+            AppSearchService.shared.fetchApps(searchTerm: searchText) { (searchResult) in
+                switch searchResult {
+                case let .success(apps):
+                    
+                    self.appSearchResults = apps
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                    
+                case let .failure(error):
+                    print("error found : \(error)")
+                }
+            }
+        })
     }
 }

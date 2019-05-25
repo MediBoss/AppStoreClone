@@ -12,9 +12,9 @@ class AppSearchService {
     
     static let shared = AppSearchService()
     
-    func fetchApps(completion: @escaping (Result<[ResultType], Error>) -> ()) {
+    func fetchApps(searchTerm: String, completion: @escaping (Result<[ResultType], Error>) -> ()) {
         
-        let urlString = "https://itunes.apple.com/search?term=instangram&entity=software"
+        let urlString = "https://itunes.apple.com/search?term=\(searchTerm)&entity=software"
         
         guard let url = URL(string: urlString) else { return }
         
@@ -27,7 +27,6 @@ class AppSearchService {
                     
                     let searchResult = try JSONDecoder().decode(SearchResult.self, from: data)
                     completion(.success(searchResult.results))
-                    //print(searchResult.results)
                     
                 } catch let decodeError{
                     print("Failed to decode JSON", decodeError)
