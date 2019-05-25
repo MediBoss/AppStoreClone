@@ -6,7 +6,6 @@
 //  Copyright © 2019 Medi Assumani. All rights reserved.
 //
 
-import SDWebImage
 import UIKit
 
 class AppSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
@@ -58,21 +57,7 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCell.cellID, for: indexPath) as! SearchResultCell
         let currentResult = appSearchResults[indexPath.item]
-        let appIconUrl = URL(string: currentResult.artworkUrl100)
-        
-        cell.appTitleLabel.text = currentResult.trackName
-        cell.categoryLabel.text = currentResult.primaryGenreName
-        cell.ratingsLabel.text = "Rating: \(currentResult.averageUserRating ?? 0.0)"
-        cell.appThumbnailView.sd_setImage(with: appIconUrl)
-        cell.screenshot1ImageView.sd_setImage(with: URL(string: currentResult.screenshotUrls[0]))
-        
-        if currentResult.screenshotUrls.count > 1 {
-            cell.screenshot2ImageView.sd_setImage(with: URL(string: currentResult.screenshotUrls[1]))
-        }
-        
-        if currentResult.screenshotUrls.count > 2 {
-            cell.screenshot3ImageView.sd_setImage(with: URL(string: currentResult.screenshotUrls[2]))
-        }
+        cell.appResult = currentResult
         
         return cell
     }

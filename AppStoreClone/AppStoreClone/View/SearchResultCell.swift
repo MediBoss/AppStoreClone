@@ -6,11 +6,33 @@
 //  Copyright © 2019 Medi Assumani. All rights reserved.
 //
 
+import SDWebImage
 import UIKit
 
 class SearchResultCell: UICollectionViewCell {
     
     static let cellID = "appSearchControllerCell"
+    
+    var appResult: ResultType! {
+        didSet {
+            
+            let appIconUrl = URL(string: appResult.artworkUrl100)
+            
+            appTitleLabel.text = appResult.trackName
+            categoryLabel.text = appResult.primaryGenreName
+            ratingsLabel.text = "Rating: \(appResult.averageUserRating ?? 0.0)"
+            appThumbnailView.sd_setImage(with: appIconUrl)
+            screenshot1ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[0]))
+            
+            if appResult.screenshotUrls.count > 1 {
+                screenshot2ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[1]))
+            }
+            
+            if appResult.screenshotUrls.count > 2 {
+                screenshot3ImageView.sd_setImage(with: URL(string: appResult.screenshotUrls[2]))
+            }
+        }
+    }
     
     let appThumbnailView: UIImageView =  {
         
@@ -85,9 +107,12 @@ class SearchResultCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 0.5
         imageView.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }
+    
+    
     
     fileprivate func configureAllStackViews() {
         
