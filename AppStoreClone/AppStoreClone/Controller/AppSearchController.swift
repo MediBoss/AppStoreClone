@@ -12,6 +12,7 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     
     
     fileprivate var appSearchResults = [ResultType]()
+    fileprivate var searchController = UISearchController(searchResultsController: nil)
     
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -28,7 +29,14 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
         collectionView.backgroundColor = .white
         
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: SearchResultCell.cellID)
+        setUpSearchBar()
         fetchItunesApps()
+    }
+    
+    
+    fileprivate func setUpSearchBar() {
+        navigationItem.searchController = self.searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     func fetchItunesApps() {
