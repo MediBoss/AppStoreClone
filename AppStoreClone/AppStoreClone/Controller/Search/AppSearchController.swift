@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppSearchController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
+class AppSearchController: BaseUICollectionViewList, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     
     fileprivate var throttleTimer: Timer?
     fileprivate var appSearchResults = [ResultType]()
@@ -23,14 +23,6 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
         
         return label
     }()
-    
-    init() {
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +73,8 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
         
         throttleTimer?.invalidate()
         throttleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
-            // Search up a term every half a second, throttles the process if user input is faster than interval
             
+            // Search up a term every half a second, throttles the process if user input is faster than interval
             AppSearchService.shared.fetchApps(searchTerm: searchText) { (searchResult) in
                 switch searchResult {
                 case let .success(apps):
