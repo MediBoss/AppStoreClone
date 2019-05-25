@@ -14,6 +14,16 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     fileprivate var appSearchResults = [ResultType]()
     fileprivate var searchController = UISearchController(searchResultsController: nil)
     
+    fileprivate let enterSearchTermLabel: UILabel = {
+       
+        let label = UILabel()
+        label.text = "Enter a search term above"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        return label
+    }()
+    
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
@@ -25,12 +35,11 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         collectionView.backgroundColor = .white
-        
+        view.addSubview(enterSearchTermLabel)
+        enterSearchTermLabel.fillSuperview()
         collectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: SearchResultCell.cellID)
         setUpSearchBar()
-        //fetchItunesApps()
     }
     
     /// Configures and Styles the search bar
@@ -47,6 +56,7 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        enterSearchTermLabel.isHidden = appSearchResults.count != 0
         return self.appSearchResults.count
     }
     
@@ -70,9 +80,8 @@ class AppSearchController: UICollectionViewController, UICollectionViewDelegateF
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         throttleTimer?.invalidate()
-        
-        // Search up a term every half a second, throttles the process if user input is faster than interval
         throttleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            // Search up a term every half a second, throttles the process if user input is faster than interval
             
             AppSearchService.shared.fetchApps(searchTerm: searchText) { (searchResult) in
                 switch searchResult {
