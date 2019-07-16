@@ -12,7 +12,12 @@ import UIKit
 class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlowLayout {
     
     let headerId = "headerid"
-    var editorChoiceApps: AppGroup?
+    
+    var appGroups = [AppGroup](){
+        didSet{
+            
+        }
+    }
 //    var fetchedAppFeeds = AppGroup(){
 //        didSet{
 //            DispatchQueue.main.async { [ weak self] in
@@ -37,15 +42,50 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     
     private func fetchAppGroups() {
         
-        AppSearchService.shared.fetchEditorApps { (result) in
-            
+        AppSearchService.shared.fetchByType(type: .topFree) { (result) in
+
             switch result{
-            case let .success(appgroup):
-                self.editorChoiceApps = appgroup
+            case let .success(fetchedAppgroup):
+                self.appGroups.append(fetchedAppgroup)
+
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(_):
+                print("oops")
+            }
+        }
+        
+        AppSearchService.shared.fetchByType(type: .topGrossing) { (result) in
+            switch result{
+            case let .success(fetchedAppgroup):
+                self.appGroups.append(fetchedAppgroup)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(_):
+                print("oops")
+            }
+        }
+        
+        AppSearchService.shared.fetchByType(type: .newGames) { (result) in
+            switch result{
+            case let .success(fetchedAppgroup):
+                self.appGroups.append(fetchedAppgroup)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            case .failure(_):
+                print("oops")
+            }
+        }
+        
+        AppSearchService.shared.fetchByType(type: .topPaid) { (result) in
+            switch result{
+            case let .success(fetchedAppgroup):
+                self.appGroups.append(fetchedAppgroup)
                 
-                DispatchQueue.main.async { [ weak self] in
-    
-                    guard let self = self else { return }
+                DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
             case .failure(_):
@@ -56,15 +96,15 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return appGroups.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsGroupsCell.cellID, for: indexPath) as! AppsGroupsCell
-        
-        cell.appSectionLabel.text = editorChoiceApps?.feed.title
-        cell.horizontalController.appGroup = editorChoiceApps
+        let group = appGroups[indexPath.row]
+        cell.appSectionLabel.text = group.feed.title
+        cell.horizontalController.appGroup = group
         cell.horizontalController.collectionView.reloadData()
         
         return cell
@@ -89,6 +129,6 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     // STEP 3 : Set the header size
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 300)
+        return .init(width: view.frame.width, height: 0)
     }
 }

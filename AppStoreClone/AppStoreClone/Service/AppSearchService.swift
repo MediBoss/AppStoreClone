@@ -8,9 +8,23 @@
 
 import Foundation
 
+
+enum FeedType: String{
+    
+    case topFree = "top-free"
+    case topGrossing = "top-grossing"
+    case newGames = "new-games-we-love"
+    case topPaid = "top-paid"
+}
+
 class AppSearchService {
     
     static let shared = AppSearchService()
+    
+    private func createUrlForFeedType(type:FeedType) -> URL? {
+        let urlString = "https://rss.itunes.apple.com/api/v1/us/ios-apps/\(type.rawValue)/all/50/explicit.json"
+        return URL(string: urlString)
+    }
     
     func fetchApps(searchTerm: String, completion: @escaping (Result<[ResultType], Error>) -> ()) {
         
@@ -38,19 +52,17 @@ class AppSearchService {
         }.resume()
     }
     
-    func fetchEditorApps(completion: @escaping (Result<AppGroup, Error>) -> ()) {
+    func fetchByType(type: FeedType, completion: @escaping (Result<AppGroup, Error>) -> ()){
         
-        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json") else { return }
-        
+        guard let url = createUrlForFeedType(type: type) else { return }
         URLSession.shared.dataTask(with: url) { (data, res, err) in
             
             do {
                 let appGroup = try JSONDecoder().decode(AppGroup.self, from: data!)
-                 completion(.success(appGroup))
+                completion(.success(appGroup))
             } catch {
                 completion(.failure(err!))
             }
-            
         }.resume()
     }
 }
