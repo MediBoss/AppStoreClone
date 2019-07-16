@@ -43,10 +43,8 @@ class AppsHorizontalController: BaseUICollectionViewList, UICollectionViewDelega
         
         cell.appNameLabel.text = appGroup?.feed.results[indexPath.row].name
         cell.companyLabel.text = appGroup?.feed.results[indexPath.row].artistName
-        
-        DispatchQueue.global(qos: .background).async {
-            cell.appIconImageView.sd_setImage(with: url)
-        }
+        cell.appIconImageView.sd_setImage(with: url)
+
         return cell
     }
     

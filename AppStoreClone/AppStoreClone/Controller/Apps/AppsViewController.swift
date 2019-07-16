@@ -42,57 +42,61 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     
     private func fetchAppGroups() {
         
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
         AppSearchService.shared.fetchByType(type: .topFree) { (result) in
-
+            dispatchGroup.leave()
             switch result{
             case let .success(fetchedAppgroup):
                 self.appGroups.append(fetchedAppgroup)
-
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
             case .failure(_):
                 print("oops")
             }
         }
         
+        dispatchGroup.enter()
         AppSearchService.shared.fetchByType(type: .topGrossing) { (result) in
+            dispatchGroup.leave()
             switch result{
             case let .success(fetchedAppgroup):
                 self.appGroups.append(fetchedAppgroup)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
             case .failure(_):
                 print("oops")
             }
         }
         
+        dispatchGroup.enter()
         AppSearchService.shared.fetchByType(type: .newGames) { (result) in
+            dispatchGroup.leave()
             switch result{
             case let .success(fetchedAppgroup):
                 self.appGroups.append(fetchedAppgroup)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
             case .failure(_):
                 print("oops")
             }
         }
         
+        dispatchGroup.enter()
         AppSearchService.shared.fetchByType(type: .topPaid) { (result) in
+            dispatchGroup.leave()
             switch result{
             case let .success(fetchedAppgroup):
                 self.appGroups.append(fetchedAppgroup)
-                
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
             case .failure(_):
                 print("oops")
             }
         }
         
+        
+        dispatchGroup.notify(queue: .main) {
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.collectionView.reloadData()
+            }
+            print("completed all async tasks")
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -129,6 +133,6 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     // STEP 3 : Set the header size
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return .init(width: view.frame.width, height: 0)
+        return .init(width: view.frame.width, height: 300)
     }
 }
