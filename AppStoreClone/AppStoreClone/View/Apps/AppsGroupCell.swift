@@ -12,6 +12,7 @@ import UIKit
 class AppsGroupsCell: UICollectionViewCell {
     
     static let cellID = "AppsGroupsCell"
+    
     let appSectionLabel: UILabel = {
         
         let label = UILabel()
@@ -21,12 +22,18 @@ class AppsGroupsCell: UICollectionViewCell {
         return label
     }()
     
+    let horizontalController = AppsHorizontalController()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .red
         
         addSubview(appSectionLabel)
-        appSectionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
+        appSectionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
+        
+        addSubview(horizontalController.view)
+        
+        horizontalController.view.anchor(top: appSectionLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
