@@ -12,7 +12,16 @@ import UIKit
 class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlowLayout {
     
     let headerId = "headerid"
-    
+    var editorChoiceApps: AppGroup?
+//    var fetchedAppFeeds = AppGroup(){
+//        didSet{
+//            DispatchQueue.main.async { [ weak self] in
+//
+//                guard let self = self else { return }
+//                self.collectionView.reloadData()
+//            }
+//        }
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .white
@@ -21,16 +30,43 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
         
         // STEP 1 : Register CollectionReusableView
         collectionView.register(AppsPageHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        
+        fetchAppGroups()
+    }
+    
+    
+    private func fetchAppGroups() {
+        
+        AppSearchService.shared.fetchEditorApps { (result) in
+            
+            switch result{
+            case let .success(appgroup):
+                self.editorChoiceApps = appgroup
+                
+                DispatchQueue.main.async { [ weak self] in
+    
+                    guard let self = self else { return }
+                    self.collectionView.reloadData()
+                }
+            case .failure(_):
+                print("oops")
+            }
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsGroupsCell.cellID, for: indexPath)
-        //cell.backgroundColor = .red
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AppsGroupsCell.cellID, for: indexPath) as! AppsGroupsCell
+        
+        cell.appSectionLabel.text = editorChoiceApps?.feed.title
+        cell.horizontalController.appGroup = editorChoiceApps
+        cell.horizontalController.collectionView.reloadData()
+        
         return cell
     }
     

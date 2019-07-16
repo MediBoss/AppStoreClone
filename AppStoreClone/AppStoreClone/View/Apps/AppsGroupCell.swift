@@ -17,10 +17,11 @@ class AppsGroupsCell: UICollectionViewCell {
         
         let label = UILabel()
         label.text = "App Section"
-        label.font = .boldSystemFont(ofSize: 30)
+        label.font = .boldSystemFont(ofSize: 25)
         
         return label
     }()
+    
     
     let horizontalController = AppsHorizontalController()
     

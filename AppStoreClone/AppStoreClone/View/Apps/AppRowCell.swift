@@ -30,7 +30,6 @@ class AppRowCell: UICollectionViewCell {
     
     private func layoutCellItems() {
 
-        appIconImageView.backgroundColor = .red
         appIconImageView.constrainWidth(constant: 64)
         appIconImageView.constrainHeight(constant: 64)
         

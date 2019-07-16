@@ -37,4 +37,20 @@ class AppSearchService {
             
         }.resume()
     }
+    
+    func fetchEditorApps(completion: @escaping (Result<AppGroup, Error>) -> ()) {
+        
+        guard let url = URL(string: "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json") else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, res, err) in
+            
+            do {
+                let appGroup = try JSONDecoder().decode(AppGroup.self, from: data!)
+                 completion(.success(appGroup))
+            } catch {
+                completion(.failure(err!))
+            }
+            
+        }.resume()
+    }
 }
