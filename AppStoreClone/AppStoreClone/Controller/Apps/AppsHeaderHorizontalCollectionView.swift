@@ -11,6 +11,9 @@ import UIKit
 class AppHeaderHorizontalCollectionView: BaseUICollectionViewList, UICollectionViewDelegateFlowLayout {
     
     let cellId = "cellId"
+    
+    var socialApps = [SocialApp]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,14 +26,18 @@ class AppHeaderHorizontalCollectionView: BaseUICollectionViewList, UICollectionV
         }
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return socialApps.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppHeaderCell
+        let currentSocialApp = self.socialApps[indexPath.row]
+        
+        cell.companyNameLabel.text = currentSocialApp.name
+        cell.posterImageView.sd_setImage(with: URL(string: currentSocialApp.imageUrl), completed: nil)
+        cell.blurbLabel.text = currentSocialApp.tagline
         
         return cell
     }

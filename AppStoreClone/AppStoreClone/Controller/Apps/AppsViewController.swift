@@ -13,20 +13,18 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     
     let headerId = "headerid"
     
-    var appGroups = [AppGroup](){
-        didSet{
-            
-        }
-    }
-//    var fetchedAppFeeds = AppGroup(){
-//        didSet{
-//            DispatchQueue.main.async { [ weak self] in
-//
-//                guard let self = self else { return }
-//                self.collectionView.reloadData()
-//            }
-//        }
-//    }
+    var appGroups = [AppGroup]()
+    var socialApps = [SocialApp]()
+    
+    var spinner: UIActivityIndicatorView = {
+        
+        let iv = UIActivityIndicatorView(style: .whiteLarge)
+        iv.color = .black
+        iv.hidesWhenStopped = true
+        iv.startAnimating()
+        return iv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .white
@@ -35,6 +33,9 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
         
         // STEP 1 : Register CollectionReusableView
         collectionView.register(AppsPageHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        
+        view.addSubview(spinner)
+        spinner.fillSuperview()
         
         fetchAppGroups()
     }
@@ -45,54 +46,44 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
         let dispatchGroup = DispatchGroup()
         
         dispatchGroup.enter()
-        AppSearchService.shared.fetchByType(type: .topFree) { (result) in
+        AppSearchService.shared.fetchByType(type: .topFree) { (app, err) in
+            
             dispatchGroup.leave()
-            switch result{
-            case let .success(fetchedAppgroup):
-                self.appGroups.append(fetchedAppgroup)
-            case .failure(_):
-                print("oops")
-            }
+            self.appGroups.append(app!)
         }
         
         dispatchGroup.enter()
-        AppSearchService.shared.fetchByType(type: .topGrossing) { (result) in
+        AppSearchService.shared.fetchByType(type: .topGrossing) { (app, err) in
+            
             dispatchGroup.leave()
-            switch result{
-            case let .success(fetchedAppgroup):
-                self.appGroups.append(fetchedAppgroup)
-            case .failure(_):
-                print("oops")
-            }
+            self.appGroups.append(app!)
         }
         
         dispatchGroup.enter()
-        AppSearchService.shared.fetchByType(type: .newGames) { (result) in
+        AppSearchService.shared.fetchByType(type: .newGames) { (app, err) in
+            
             dispatchGroup.leave()
-            switch result{
-            case let .success(fetchedAppgroup):
-                self.appGroups.append(fetchedAppgroup)
-            case .failure(_):
-                print("oops")
-            }
+            self.appGroups.append(app!)
         }
         
         dispatchGroup.enter()
-        AppSearchService.shared.fetchByType(type: .topPaid) { (result) in
+        AppSearchService.shared.fetchByType(type: .topPaid) { (app, err) in
+            
             dispatchGroup.leave()
-            switch result{
-            case let .success(fetchedAppgroup):
-                self.appGroups.append(fetchedAppgroup)
-            case .failure(_):
-                print("oops")
-            }
+            self.appGroups.append(app!)
         }
         
+        dispatchGroup.enter()
+        AppSearchService.shared.fetchSocialApps { (apps, err) in
+            dispatchGroup.leave()
+            self.socialApps = apps ?? []
+        }
         
         dispatchGroup.notify(queue: .main) {
             
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                self.spinner.stopAnimating()
                 self.collectionView.reloadData()
             }
             print("completed all async tasks")
@@ -125,7 +116,10 @@ class AppsViewConteroller: BaseUICollectionViewList, UICollectionViewDelegateFlo
     // STEP 2 : Override this method to deque a reusable suplementatry view
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppsPageHeaderView
+        
+        header.appHeaderhorizontalController.socialApps = self.socialApps
+        header.appHeaderhorizontalController.collectionView.reloadData()
         
         return header
     }

@@ -21,6 +21,7 @@ class AppHeaderCell: UICollectionViewCell {
         backgroundColor = .white
         
         posterImageView.backgroundColor = .red
+        companyNameLabel.textColor = .blue
         blurbLabel.numberOfLines = 2
         let stackView = CustomStackView(arrangedSubviews: [companyNameLabel, blurbLabel, posterImageView],
                                         spacing: 12,

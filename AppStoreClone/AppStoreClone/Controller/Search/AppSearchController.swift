@@ -75,19 +75,13 @@ class AppSearchController: BaseUICollectionViewList, UICollectionViewDelegateFlo
         throttleTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             
             // Search up a term every half a second, throttles the process if user input is faster than interval
-            AppSearchService.shared.fetchApps(searchTerm: searchText) { (searchResult) in
-                switch searchResult {
-                case let .success(apps):
-                    
-                    self.appSearchResults = apps
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                    
-                case let .failure(error):
-                    print("error found : \(error)")
+            AppSearchService.shared.fetchApps(searchTerm: searchText, completion: { (res, error) in
+                
+                self.appSearchResults = res?.results ?? []
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
                 }
-            }
+            })
         })
     }
 }
